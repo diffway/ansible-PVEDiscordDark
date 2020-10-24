@@ -30,4 +30,4 @@
   - name: install new theme
     command: python3 {{ download_dir }}/PVEDiscordDark.py -a install
   
-  when: theme_updated.changed == true
+  when: theme_updated.changed
