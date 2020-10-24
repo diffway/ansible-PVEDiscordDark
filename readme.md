@@ -1,6 +1,6 @@
-## [Ansible-PVEDiscordDark](https://github.com/djarbz/ansible-PVEDiscordDark)
+## Ansible-PVEDiscordDark
 
-This role will allow you to install the PVE Discord Dark theme.
+This role will allow you to install the [PVE Discord Dark theme](https://github.com/Weilbyte/PVEDiscordDark).
 Will perform a proper update if necessary.
 Can specify a specific branch/tag for a version.
 
