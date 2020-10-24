@@ -1,0 +1,33 @@
+# https://github.com/Weilbyte/PVEDiscordDark/issues/38
+- name: Create {{ download_dir }} if it does not exist
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Check for New/Updated PVEDiscordDark components
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ download_dir }}/{{ item | basename }}"
+    mode: '0770'
+  register: theme_updated
+  loop:
+    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark.py
+    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark/sass/PVEDiscordDark.css
+    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark/js/PVEDiscordDark.js
+
+- name: Install/Update PVE Discord Dark
+  block:
+  - name: Check if theme is installed
+    stat:
+      path: /usr/share/pve-manager/css/dd_style.css
+    register: theme_installed
+
+  - name: uninstall old theme
+    command: python3 {{ download_dir }}/PVEDiscordDark.py -a uninstall
+    when: theme_installed.stat.exists
+
+  - name: install new theme
+    command: python3 {{ download_dir }}/PVEDiscordDark.py -a install
+  
+  when: theme_updated.changed == true
