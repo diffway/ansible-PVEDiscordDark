@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: PVEDiscordDark_Theme
+  author: Austin Arbour
+  description: Ansible role to install and update PVEDiscordDark theme for Proxmox
+
+  license: MIT (Expat)
+  min_ansible_version: 2.5
+
+  platforms:
+  - name: Debian
+    versions:
+    - jessie
+    - stretch
+    - buster
+
+  tags:
+  - system
+
+dependencies: []
