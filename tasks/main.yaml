@@ -12,7 +12,7 @@
     mode: '0770'
   register: theme_updated
   loop:
-    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark.py
+    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark.sh
     - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark/sass/PVEDiscordDark.css
     - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark/js/PVEDiscordDark.js
 
@@ -24,10 +24,10 @@
     register: theme_installed
 
   - name: uninstall old theme
-    command: python3 {{ download_dir }}/PVEDiscordDark.py -a uninstall
+    command: bash {{ download_dir }}/PVEDiscordDark.sh uninstall
     when: theme_installed.stat.exists
 
   - name: install new theme
-    command: python3 {{ download_dir }}/PVEDiscordDark.py -a install
+    command: bash {{ download_dir }}/PVEDiscordDark.sh install
   
   when: theme_updated.changed
