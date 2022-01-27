@@ -7,5 +7,5 @@ Can specify a specific branch/tag for a version.
 ### Vars
 | Variable | Default | Description|
 |-----------|----------|----------|
-| download_dir | /opt/DiscordDark | Where should we download temp files |
-| version | master | Branch/Tag/Commit to install |
+| theme_basedir | /opt/PVEDiscordDark | Where should we download temp files |
+| theme_version | master | Branch/Tag/Commit to install |
