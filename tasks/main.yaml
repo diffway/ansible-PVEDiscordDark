@@ -16,18 +16,6 @@
     - "{{ theme_repo }}/{{ theme_version }}/{{ theme_name }}/sass/{{ theme_name }}.css"
     - "{{ theme_repo }}/{{ theme_version }}/{{ theme_name }}/js/{{ theme_name }}.js"
 
-- name: Set executable bit for theme installer
-  block:
-  - name: Check theme installer has been downloaded
-    stat:
-      path: "{{ theme_basedir }}/{{ theme_name }}.sh"
-    register: theme_installer
-  - name: Set executable bit for theme installer
-    file:
-      path: "{{ theme_basedir }}/{{ theme_name }}.sh"
-      mode: 0744
-    when: theme_installer.stat.exists
-
 - name: "Install/Update {{ theme_name }}"
   block:
   - name: Check if theme is installed
@@ -36,10 +24,10 @@
     register: theme_installed
 
   - name: uninstall old theme
-    command: {{ theme_basedir }}/{{ theme_name }}.sh uninstall
+    command: "/usr/bin/env bash {{ theme_basedir }}/{{ theme_name }}.sh uninstall"
     when: theme_installed.stat.exists
 
   - name: install new theme
-    command: {{ theme_basedir }}/{{ theme_name }}.sh install
+    command: "/usr/bin/env bash {{ theme_basedir }}/{{ theme_name }}.sh install"
 
   when: theme_updated.changed
