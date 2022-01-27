@@ -1,22 +1,22 @@
 # https://github.com/Weilbyte/PVEDiscordDark/issues/38
-- name: Create {{ download_dir }} if it does not exist
+- name: "Create {{ theme_basedir }} if it does not exist"
   file:
-    path: "{{ download_dir }}"
+    path: "{{ theme_basedir }}"
     state: directory
-    mode: '0755'
+    mode: 0755
 
-- name: Check for New/Updated PVEDiscordDark components
+- name: Check for New/Updated {{ theme_name }} components
   get_url:
     url: "{{ item }}"
-    dest: "{{ download_dir }}/{{ item | basename }}"
-    mode: '0770'
+    dest: "{{ theme_basedir }}/{{ item | basename }}"
+    mode: 0554
   register: theme_updated
   loop:
-    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark.sh
-    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark/sass/PVEDiscordDark.css
-    - https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/{{ version }}/PVEDiscordDark/js/PVEDiscordDark.js
+    - "{{ theme_repo }}/{{ theme_version }}/{{ theme_name }}.sh"
+    - "{{ theme_repo }}/{{ theme_version }}/{{ theme_name }}/sass/{{ theme_name }}.css"
+    - "{{ theme_repo }}/{{ theme_version }}/{{ theme_name }}/js/{{ theme_name }}.js"
 
-- name: Install/Update PVE Discord Dark
+- name: "Install/Update {{ theme_name }}"
   block:
   - name: Check if theme is installed
     stat:
@@ -24,10 +24,10 @@
     register: theme_installed
 
   - name: uninstall old theme
-    command: bash {{ download_dir }}/PVEDiscordDark.sh uninstall
+    command: bash {{ theme_basedir }}/{{ theme_name }}.sh uninstall
     when: theme_installed.stat.exists
 
   - name: install new theme
-    command: bash {{ download_dir }}/PVEDiscordDark.sh install
-  
+    command: bash {{ theme_basedir }}/{{ theme_name }}.sh install
+
   when: theme_updated.changed

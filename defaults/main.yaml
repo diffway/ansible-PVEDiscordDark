@@ -1,2 +1,5 @@
-download_dir: /opt/DiscordDark
-version: master
+theme_version: master
+theme_name: PVEDiscordDark
+theme_repo: https://raw.githubusercontent.com/Weilbyte/{{ theme_name }}
+
+theme_basedir: /opt/{{ theme_name }}
